@@ -11,3 +11,8 @@ export interface AnimatedContainerProps {
   entry?: string;
   exit?: string;
 }
+
+export interface ActivePageState {
+  Name: string;
+  In: boolean;
+}
