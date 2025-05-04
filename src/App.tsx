@@ -11,7 +11,7 @@ function App() {
   return (
     <div className='app-flex app-col app-h-vw-100 app-bg-black'>
       <Navbar />
-      <AnimatedContainer isEntering={activePage.In && activePage.Name === 'Auth'}>
+      <AnimatedContainer entry="animate__fadeInUpBig" exit="animate__fadeOutDownBig" isEntering={activePage.In && activePage.Name === 'Auth'}>
         <AuthPage />
       </AnimatedContainer>
       <AnimatedContainer isEntering={activePage.In && activePage.Name === 'Search'}>
