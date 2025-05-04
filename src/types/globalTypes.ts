@@ -16,3 +16,16 @@ export interface ActivePageState {
   Name: string;
   In: boolean;
 }
+
+export interface AuthenticationState {
+  isAuthenticated: boolean;
+  token: string | null;
+  user: SpotifyUser | null;
+}
+
+export interface SpotifyUser {
+  display_name: string;
+  email: string;
+  id: string;
+  images: { url: string }[];
+}
