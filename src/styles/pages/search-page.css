@@ -1,0 +1,4 @@
+.search-page {
+    width: 100%;
+    height: calc(100vh - 2rem - 34px)
+}
