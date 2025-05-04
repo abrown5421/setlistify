@@ -1,15 +1,11 @@
-import AnimatedContainer from "./containers/AnimatedContainer"
+import Navbar from "./components/Navbar"
 
 function App() {
 
   return (
-    <AnimatedContainer
-      entry="animate__fadeIn"
-      exit="animate__fadeOut"
-      isEntering={true}
-    >
-      fuck off lance corporal
-    </AnimatedContainer>
+    <div className='app-flex app-w-vw-100 app-h-vw-100 app-bg-black'>
+      <Navbar />
+    </div>
   )
 }
 
