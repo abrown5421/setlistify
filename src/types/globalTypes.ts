@@ -29,3 +29,10 @@ export interface SpotifyUser {
   id: string;
   images: { url: string }[];
 }
+
+export interface SearchParamsState {
+  artist: string;
+  venue: string;
+  tour: string;
+  year: string;
+}
