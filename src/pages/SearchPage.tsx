@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import '../styles/pages/search-page.css';
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { setArtist, setTour, setVenue, setYear } from "../store/slices/searchParamsSlice";
 import { setMessage, setOpen, setSeverity, closeNotification } from "../store/slices/notificationSlice";
+import { fetchSearchResultsFailure, fetchSearchResultsStart, fetchSearchResultsSuccess } from "../store/slices/searchResultsSlice";
 
 const SearchPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { artist, venue, tour, year } = useAppSelector(state => state.searchParams);
+  const searchResults = useAppSelector(state => state.searchResults);
+
+  useEffect(()=>{console.log(searchResults)}, [searchResults])
 
   const handleSearch = async () => {
     if (artist || venue || tour || year) {
+      dispatch(fetchSearchResultsStart());
+  
       try {
         const params = new URLSearchParams();
         if (artist) params.append('artist', artist);
@@ -24,8 +30,9 @@ const SearchPage: React.FC = () => {
           throw new Error(data.error || 'Search failed');
         }
   
-        console.log('Setlist results:', data);
+        dispatch(fetchSearchResultsSuccess(data));
       } catch (error) {
+        dispatch(fetchSearchResultsFailure((error as Error).message));
         dispatch(setOpen(true));
         dispatch(setSeverity('error'));
         dispatch(setMessage((error as Error).message));
@@ -37,7 +44,7 @@ const SearchPage: React.FC = () => {
       dispatch(setMessage('Please fill out at least one search field.'));
       setTimeout(() => dispatch(closeNotification()), 3000);
     }
-  };
+  };  
 
   return (
     <div className="app-flex app-col app-jc-center app-ai-center app-bg-white search-page">
@@ -74,7 +81,7 @@ const SearchPage: React.FC = () => {
           className="app-button app-bg-primary app-font-black"
           onClick={() => handleSearch()}
         >
-          Search
+          {searchResults.loading ? <div className="spinner" /> : "Search"}
         </button>
       </div>
     </div>

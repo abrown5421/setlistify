@@ -42,3 +42,60 @@ export interface NotificationState {
   severity: string;
   message: string;
 }
+
+export interface SearchResults {
+  type: string;
+  itemsPerPage: number;
+  page: number;
+  total: number;
+  setlist: Setlist[];
+}
+
+export interface Setlist {
+  id: string;
+  versionId: string;
+  eventDate: string;
+  lastUpdated: string;
+  artist: Artist;
+  venue: Venue;
+  sets: {
+    set: {
+      song: Song[];
+    }[];
+  };
+  url: string;
+}
+
+export interface Artist {
+  mbid: string;
+  name: string;
+  sortName: string;
+  disambiguation: string;
+  url: string;
+}
+
+export interface Venue {
+  id: string;
+  name: string;
+  city: City;
+  url: string;
+}
+
+export interface City {
+  id: string;
+  name: string;
+  state: string;
+  stateCode: string;
+  coords: {
+    lat: number;
+    long: number;
+  };
+  country: {
+    code: string;
+    name: string;
+  };
+}
+
+export interface Song {
+  name: string;
+}

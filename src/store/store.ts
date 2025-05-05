@@ -4,6 +4,7 @@ import activePageReducer from './slices/activePageSlice';
 import authenticationReducer from './slices/authenticationSlice';
 import searchParamsReducer from './slices/searchParamsSlice';
 import notificationReducer from './slices/notificationSlice';
+import searchResultsReducer from './slices/searchResultsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     authentication: authenticationReducer,
     searchParams: searchParamsReducer,
     notification: notificationReducer,
+    searchResults: searchResultsReducer,
   },
 });
 
