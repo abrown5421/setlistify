@@ -8,16 +8,34 @@ const SearchPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { artist, venue, tour, year } = useAppSelector(state => state.searchParams);
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (artist || venue || tour || year) {
-      console.log({ artist, venue, tour, year });
+      try {
+        const params = new URLSearchParams();
+        if (artist) params.append('artist', artist);
+        if (venue) params.append('venue', venue);
+        if (tour) params.append('tour', tour);
+        if (year) params.append('year', year);
+  
+        const response = await fetch(`/.netlify/functions/searchSetlists?${params.toString()}`);
+        const data = await response.json();
+  
+        if (!response.ok) {
+          throw new Error(data.error || 'Search failed');
+        }
+  
+        console.log('Setlist results:', data);
+      } catch (error) {
+        dispatch(setOpen(true));
+        dispatch(setSeverity('error'));
+        dispatch(setMessage((error as Error).message));
+        setTimeout(() => dispatch(closeNotification()), 3000);
+      }
     } else {
-      dispatch(setOpen(true))
-      dispatch(setSeverity('error'))
-      dispatch(setMessage('Please fill out at least one search field.'))
-      setTimeout(() => {
-        dispatch(closeNotification())
-      }, 3000)
+      dispatch(setOpen(true));
+      dispatch(setSeverity('error'));
+      dispatch(setMessage('Please fill out at least one search field.'));
+      setTimeout(() => dispatch(closeNotification()), 3000);
     }
   };
 

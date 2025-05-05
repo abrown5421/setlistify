@@ -22,10 +22,8 @@ const searchParamsSlice = createSlice({
     },
     closeNotification: (state) => {
       state.open = false;
-      setTimeout(() => {
-        state.severity = '';
-        state.message = '';
-      }, 250)
+      state.severity = '';
+      state.message = '';
     },
   },
 });
