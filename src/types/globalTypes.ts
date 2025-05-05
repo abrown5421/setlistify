@@ -51,12 +51,17 @@ export interface SearchResults {
   setlist: Setlist[];
 }
 
+export interface Tour {
+  name: string
+}
+
 export interface Setlist {
   id: string;
   versionId: string;
   eventDate: string;
   lastUpdated: string;
   artist: Artist;
+  tour: Tour;
   venue: Venue;
   sets: {
     set: {

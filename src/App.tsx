@@ -7,11 +7,11 @@ import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { setUser, setToken } from "./store/slices/authenticationSlice";
 import Cookies from "js-cookie";
 import axios from "axios";
+import ResultsPage from "./pages/ResultsPage";
 
 function App() {
   const dispatch = useAppDispatch();
   const activePage = useAppSelector((state) => state.activePage);
-  const authentication = useAppSelector((state) => state.authentication);
   const notification = useAppSelector((state) => state.notification);
 
   useEffect(() => {
@@ -27,10 +27,6 @@ function App() {
       }
     }
   }, [dispatch]);
-
-  useEffect(() => {
-    console.log(authentication);
-  }, [authentication]);
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -73,7 +69,7 @@ function App() {
       }
     }
   }, [dispatch]);
-
+  
   return (
     <div className="app-flex app-col app-bg-black app-relative">
       <Navbar />
@@ -82,6 +78,9 @@ function App() {
       </AnimatedContainer>
       <AnimatedContainer isEntering={activePage.In && activePage.Name === 'Search'}>
         <SearchPage />
+      </AnimatedContainer>
+      <AnimatedContainer isEntering={activePage.In && activePage.Name === 'Results'}>
+        <ResultsPage />
       </AnimatedContainer>
       <AnimatedContainer entry="animate__fadeInRight" exit="animate__fadeOutRight" isEntering={notification.open}>
         <div className={notification.severity === 'error' ? "notification notif-error app-absolute" : "notification notif-success app-absolute"}>
