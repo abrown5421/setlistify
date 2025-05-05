@@ -95,7 +95,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ mode }) => {
           className="app-button app-bg-primary app-font-black"
           onClick={() => handleSearch()}
         >
-          {searchResults.loading ? <div className="spinner" /> : "Search"}
+          {searchResults.loading ? <div className="app-spinner" /> : "Search"}
         </button>
       )}
     </div>
@@ -126,7 +126,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ mode }) => {
                   className="app-button app-col app-fl-1 app-bg-primary app-font-black"
                   onClick={() => handleSearch()}
                 >
-                  {searchResults.loading ? <div className="spinner" /> : "Search"}
+                  {searchResults.loading ? <div className="app-spinner" /> : "Search"}
                 </button>
               </div>
             </>

@@ -1,0 +1,24 @@
+.album-art {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+.track-title {
+    font-size: 22px;
+    font-weight: 600;
+}
+.track-artist {
+    font-size: 18px;
+    font-weight: 400;
+}
+.track-album {
+    font-size: 14px;
+    font-weight: 400;
+}
+.app-error {
+    color: crimson;
+}
+.tack-count {
+    top: -100px;
+    right: 0;
+}

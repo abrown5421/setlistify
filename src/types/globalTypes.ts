@@ -110,3 +110,15 @@ export interface Song {
   name: string;
   info?: string;
 }
+
+export interface ExtractedSong {
+  slfmTrackName: string;
+  slfmArtistName: string;
+  slfmTrackSet?: string;
+  slfmTrackInfo?: string;
+  spotifyTrackId?: string;
+  spotifyArtist?: string;
+  spotifyTrackName?: string;
+  spotifyAlbum?: string;
+  spotifyAlbumArt?: string;
+}

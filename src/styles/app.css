@@ -13,7 +13,7 @@ html, body {
 :root {
     --primary-color: #00e0bb;
     --black-color: #212121;
-    --grey-color: #cecece;
+    --grey-color: #d8d8d8;
     --white-color: #f7f7f7;
 }
 .app-font {
@@ -343,4 +343,16 @@ html, body {
 .notif-success {
     background-color: #63cf9d;
     border-color: #00924e;
+}
+.app-spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #fff;
+    border-top: 3px solid #333;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

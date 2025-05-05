@@ -2,6 +2,9 @@
     height: calc(100vh - 34px - 2rem);   
     z-index: 2;
 }
+.track-container {
+    max-height: calc(100vh - 74px - 6rem);
+}
 .headliner {
     font-family: 'Courier New', Courier, monospace;
     font-size: 22px;
