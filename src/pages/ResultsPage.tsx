@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import '../styles/pages/results-page.css';
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { Setlist } from '../types/globalTypes';
@@ -56,7 +56,7 @@ const ResultsPage: React.FC = () => {
               </div>
             ))}
             </div>
-            {viewport.type !== "mobile" && (
+            {viewport.type !== "mobile" ? (
               selectedSetlist.setlist && selectedSetlist.setlist ? (
                 <div className="app-flex app-col app-fl-1 app-bg-grey app-overflow-scroll app-p1 track-container">
                   <div className="app-flex app-row">
@@ -76,6 +76,8 @@ const ResultsPage: React.FC = () => {
                   No Setlist Selected
                 </div>
               )
+            ) : (
+              
             )}
         </div>
     </div>
