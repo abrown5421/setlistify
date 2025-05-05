@@ -16,6 +16,9 @@ html, body {
     --grey-color: #cecece;
     --white-color: #f7f7f7;
 }
+.app-font {
+    font-family: 'Courier New', Courier, monospace;
+}
 .app-font-primary {
     color: var(--primary-color);
 }

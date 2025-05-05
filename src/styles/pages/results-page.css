@@ -20,3 +20,18 @@
 .sb-divider {
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
+.spacer {
+    margin-top: 1rem;
+}
+.setlist-text-l {
+    font-size: 22px;
+    font-weight: 600;
+}
+.setlist-text-2 {
+    font-size: 18px;
+    font-weight: 400;
+}
+.setlist-text-3 {
+    font-size: 14px;
+    font-weight: 400;
+}

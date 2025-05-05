@@ -69,6 +69,7 @@ export interface Setlist {
   venue: Venue;
   sets: {
     set: {
+      name?: string;
       song: Song[];
     }[];
   };
@@ -107,4 +108,5 @@ export interface City {
 
 export interface Song {
   name: string;
+  info?: string;
 }
