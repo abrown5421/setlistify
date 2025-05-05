@@ -5,6 +5,8 @@ import { Setlist } from '../types/globalTypes';
 import SearchBar from "../components/SearchBar";
 import { setSelectedSetlist } from "../store/slices/selectedSetlist";
 import SpotifyTrackDisplay from "../components/SpotifyTrackDisplay";
+import Drawer from "../components/Drawer";
+import { openDrawer } from "../store/slices/drawerSlice";
 
 const ResultsPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -14,6 +16,7 @@ const ResultsPage: React.FC = () => {
 
   const handleSetlistClick = (setlist: Setlist) => {
     dispatch(setSelectedSetlist(setlist));
+    dispatch(openDrawer())
   };
 
   if (error) {
@@ -56,7 +59,7 @@ const ResultsPage: React.FC = () => {
               </div>
             ))}
             </div>
-            {viewport.type !== "mobile" ? (
+            {viewport.type === "desktop" ? (
               selectedSetlist.setlist && selectedSetlist.setlist ? (
                 <div className="app-flex app-col app-fl-1 app-bg-grey app-overflow-scroll app-p1 track-container">
                   <div className="app-flex app-row">
@@ -77,7 +80,27 @@ const ResultsPage: React.FC = () => {
                 </div>
               )
             ) : (
-              
+              selectedSetlist.setlist && selectedSetlist.setlist ? (
+                <div className="app-absolute mobile-track-container">
+                  <Drawer>
+                    <div className="app-flex app-col">
+                      <div className="setlist-text-l app-font">{selectedSetlist.setlist?.artist.name}:&nbsp;</div>
+                      <div className="setlist-text-2 app-font">{selectedSetlist.setlist?.tour.name}</div>
+                    </div>
+                    <div className="app-flex app-row">
+                      <div className="setlist-text-2 app-font">Live From: {selectedSetlist.setlist?.venue.name}</div>
+                    </div>
+                    <div className="app-flex app-row heading-divider">
+                      <div className="setlist-text-3 app-font">{selectedSetlist.setlist?.venue.city.name}, {selectedSetlist.setlist?.venue.city.country.name}</div>
+                    </div>
+                    <SpotifyTrackDisplay />
+                  </Drawer>
+                </div>
+              ) : (
+                <div className="app-hidden">
+                  No Setlist Selected
+                </div>
+              )
             )}
         </div>
     </div>

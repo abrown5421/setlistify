@@ -5,6 +5,10 @@
 .track-container {
     max-height: calc(100vh - 74px - 6rem);
 }
+.mobile-track-container {
+    bottom: 15px;
+    left: 15px;
+}
 .headliner {
     font-family: 'Courier New', Courier, monospace;
     font-size: 22px;

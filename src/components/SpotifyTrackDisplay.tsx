@@ -7,6 +7,7 @@ import '../styles/components/spotify-track-display.css';
 
 const SpotifyTrackDisplay: React.FC = () => {
   const token = useAppSelector(state => state.authentication.token);
+  const viewport = useAppSelector(state => state.viewport.type);
   const selectedSetlist = useAppSelector(state => state.selectedSetlist);
 
   const [tracks, setTracks] = useState<ExtractedSong[]>([]);
@@ -110,13 +111,25 @@ const SpotifyTrackDisplay: React.FC = () => {
       ) : (
         tracks.length > 0 ? (
           <div className="app-relative">
-            <p className="app-font app-absolute tack-count">
-                <span className="app-font-primary track-title">{matchedCount}</span>
-                /
-                <span className={allTracksMatched ? "app-font-primary track-title" : "app-error track-title"}>
-                    {totalCount}
-                </span>
-            </p>
+            {viewport !== 'mobile' && (
+              <p className="app-font app-absolute tack-count">
+                  <span className="app-font-primary track-title">{matchedCount}</span>
+                  /
+                  <span className={allTracksMatched ? "app-font-primary track-title" : "app-error track-title"}>
+                      {totalCount}
+                  </span>
+              </p>
+            )}
+            {viewport === 'mobile' && (
+              <p className="app-font tack-count">
+                  <span className="app-font-primary track-title">{matchedCount}</span>
+                  /
+                  <span className={allTracksMatched ? "app-font-primary track-title" : "app-error track-title"}>
+                      {totalCount} 
+                  </span>
+                  &nbsp;tracks found
+              </p>
+            )}
             {tracks.map((song, idx) => (
                 song.spotifyTrackName ? (
                     <div key={idx} className="app-row app-flex app-gap-1 song-card spacer">
@@ -140,6 +153,7 @@ const SpotifyTrackDisplay: React.FC = () => {
                         </div>
                         <div className="app-flex app-col app-fl-10">
                             <div className="track-title app-font app-error">Track Couldn't Be Found on Spotify</div>
+                            <div className="track-artist app-font"><strong>{song.slfmTrackName}</strong></div>
                             <div className="track-artist app-font"><strong>By: </strong>{song.slfmArtistName}</div>
                         </div>
                     </div>

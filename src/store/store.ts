@@ -6,6 +6,7 @@ import searchParamsReducer from './slices/searchParamsSlice';
 import notificationReducer from './slices/notificationSlice';
 import searchResultsReducer from './slices/searchResultsSlice';
 import selectedSetlistReducer from './slices/selectedSetlist';
+import drawerReducer from './slices/drawerSlice';
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     notification: notificationReducer,
     searchResults: searchResultsReducer,
     selectedSetlist: selectedSetlistReducer,
+    drawer: drawerReducer
   },
 });
 
