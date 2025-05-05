@@ -299,10 +299,34 @@ html, body {
     box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),
                 0px 2px 2px 0px rgba(0,0,0,0.14),
                 0px 1px 5px 0px rgba(0,0,0,0.12);
-  }
-  
-  .app-button:hover {
+}
+.app-button:hover {
     box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),
                 0px 4px 5px 0px rgba(0,0,0,0.14),
                 0px 1px 10px 0px rgba(0,0,0,0.12);
-  }
+}
+.notification {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    padding: 16px 24px;
+    border-radius: 4px;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+    border: 2px solid;    color: white;
+    z-index: 1000;
+    min-width: 288px;
+    max-width: 568px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    animation: slideIn 0.3s ease-out;
+}
+.notif-error {
+    background-color: #e77878;
+    border-color: #c00000;
+}
+.notif-success {
+    background-color: #63cf9d;
+    border-color: #00924e;
+}

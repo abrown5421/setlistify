@@ -12,6 +12,7 @@ function App() {
   const dispatch = useAppDispatch();
   const activePage = useAppSelector((state) => state.activePage);
   const authentication = useAppSelector((state) => state.authentication);
+  const notification = useAppSelector((state) => state.notification);
 
   useEffect(() => {
     const storedUser = Cookies.get('spotify_user');
@@ -74,13 +75,18 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className="app-flex app-col app-h-vw-100 app-bg-black">
+    <div className="app-flex app-col app-bg-black app-relative">
       <Navbar />
       <AnimatedContainer entry="animate__fadeInUpBig" exit="animate__fadeOutDownBig" isEntering={activePage.In && activePage.Name === 'Auth'}>
         <AuthPage />
       </AnimatedContainer>
       <AnimatedContainer isEntering={activePage.In && activePage.Name === 'Search'}>
         <SearchPage />
+      </AnimatedContainer>
+      <AnimatedContainer entry="animate__fadeInRight" exit="animate__fadeOutRight" isEntering={notification.open}>
+        <div className={notification.severity === 'error' ? "notification notif-error app-absolute" : "notification notif-success app-absolute"}>
+          {notification.message}
+        </div>
       </AnimatedContainer>
     </div>
   );

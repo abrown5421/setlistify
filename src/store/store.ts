@@ -3,6 +3,7 @@ import viewportReducer from './slices/viewportSlice';
 import activePageReducer from './slices/activePageSlice';
 import authenticationReducer from './slices/authenticationSlice';
 import searchParamsReducer from './slices/searchParamsSlice';
+import notificationReducer from './slices/notificationSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     activePage: activePageReducer,
     authentication: authenticationReducer,
     searchParams: searchParamsReducer,
+    notification: notificationReducer,
   },
 });
 

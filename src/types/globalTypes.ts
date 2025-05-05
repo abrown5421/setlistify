@@ -36,3 +36,9 @@ export interface SearchParamsState {
   tour: string;
   year: string;
 }
+
+export interface NotificationState {
+  open: boolean;
+  severity: string;
+  message: string;
+}

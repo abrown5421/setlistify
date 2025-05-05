@@ -2,6 +2,7 @@ import React from "react";
 import '../styles/pages/search-page.css';
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { setArtist, setTour, setVenue, setYear } from "../store/slices/searchParamsSlice";
+import { setMessage, setOpen, setSeverity, closeNotification } from "../store/slices/notificationSlice";
 
 const SearchPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -11,7 +12,12 @@ const SearchPage: React.FC = () => {
     if (artist || venue || tour || year) {
       console.log({ artist, venue, tour, year });
     } else {
-      console.warn("Please fill out at least one search field.");
+      dispatch(setOpen(true))
+      dispatch(setSeverity('error'))
+      dispatch(setMessage('Please fill out at least one search field.'))
+      setTimeout(() => {
+        dispatch(closeNotification())
+      }, 3000)
     }
   };
 
