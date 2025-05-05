@@ -48,25 +48,28 @@ function App() {
     };
 
     if (accessToken) {
-      Cookies.set('spotify_access_token', accessToken, { expires: 7 });
+      const expiresAt = Date.now() + 3600 * 1000;
+      Cookies.set('spotify_access_token', accessToken, { expires: 1/24 }); 
+      Cookies.set('spotify_token_expires_at', expiresAt.toString(), { expires: 1/24 });
       dispatch(setToken(accessToken));
       fetchUserProfile(accessToken);
       window.location.hash = '';
     } else {
       const storedToken = Cookies.get('spotify_access_token');
-      const storedUser = Cookies.get('spotify_user');
+      const tokenExpiresAt = Cookies.get('spotify_token_expires_at');
 
-      if (storedToken) {
+      if (storedToken && tokenExpiresAt && parseInt(tokenExpiresAt) > Date.now()) {
         dispatch(setToken(storedToken));
+        const storedUser = Cookies.get('spotify_user');
         if (storedUser) {
-          try {
-            dispatch(setUser(JSON.parse(storedUser)));
-          } catch {
-            console.warn("Failed to parse stored user data");
-          }
+          dispatch(setUser(JSON.parse(storedUser)));
         } else {
           fetchUserProfile(storedToken);
         }
+      } else {
+        Cookies.remove('spotify_access_token');
+        Cookies.remove('spotify_token_expires_at');
+        Cookies.remove('spotify_user');
       }
     }
   }, [dispatch]);
