@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import '../styles/components/search-bar.css';
+import { SearchBarProps } from "../types/globalTypes";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { setArtist, setTour, setVenue, setYear } from "../store/slices/searchParamsSlice";
 import { setMessage, setOpen, setSeverity, closeNotification } from "../store/slices/notificationSlice";
 import { fetchSearchResultsFailure, fetchSearchResultsStart, fetchSearchResultsSuccess } from "../store/slices/searchResultsSlice";
 import { setActivePage } from "../store/slices/activePageSlice";
+import AnimatedContainer from "../containers/AnimatedContainer";
 
-const SearchBar: React.FC = () => {
+const SearchBar: React.FC<SearchBarProps> = ({ mode }) => {
   const dispatch = useAppDispatch();
   const { artist, venue, tour, year } = useAppSelector(state => state.searchParams);
   const searchResults = useAppSelector(state => state.searchResults);
+  const viewport = useAppSelector(state => state.viewport);
 
+  const [collapseOpen, setCollapseOpen] = useState<boolean>(false);
+  
   const handleSearch = async () => {
     if (artist || venue || tour || year) {
       dispatch(fetchSearchResultsStart());
@@ -55,43 +60,94 @@ const SearchBar: React.FC = () => {
     }
   };  
 
-  return (
-    <div className="search-container">
-        <input
-            type="text"
-            className="search-input"
-            placeholder="Artist"
-            value={artist}
-            onChange={(e) => dispatch(setArtist(e.target.value))}
-        />
-        <input
-            type="text"
-            className="search-input"
-            placeholder="Venue"
-            value={venue}
-            onChange={(e) => dispatch(setVenue(e.target.value))}
-        />
-        <input
-            type="text"
-            className="search-input"
-            placeholder="Tour"
-            value={tour}
-            onChange={(e) => dispatch(setTour(e.target.value))}
-        />
-        <input
-            type="number"
-            className="search-input"
-            placeholder="Year"
-            value={year}
-            onChange={(e) => dispatch(setYear(e.target.value))}
-        />
+  const inputFields = (
+    <div className={viewport.type === 'mobile' ? "search-container app-col" : "search-container" }>
+      <input
+        type="text"
+        className="search-input"
+        placeholder="Artist"
+        value={artist}
+        onChange={(e) => dispatch(setArtist(e.target.value))}
+      />
+      <input
+        type="text"
+        className="search-input"
+        placeholder="Venue"
+        value={venue}
+        onChange={(e) => dispatch(setVenue(e.target.value))}
+      />
+      <input
+        type="text"
+        className="search-input"
+        placeholder="Tour"
+        value={tour}
+        onChange={(e) => dispatch(setTour(e.target.value))}
+      />
+      <input
+        type="number"
+        className="search-input"
+        placeholder="Year"
+        value={year}
+        onChange={(e) => dispatch(setYear(e.target.value))}
+      />
+      {!mode && (
         <button
-            className="app-button app-bg-primary app-font-black"
-            onClick={() => handleSearch()}
+          className="app-button app-bg-primary app-font-black"
+          onClick={() => handleSearch()}
         >
-            {searchResults.loading ? <div className="spinner" /> : "Search"}
+          {searchResults.loading ? <div className="spinner" /> : "Search"}
         </button>
+      )}
     </div>
+  );
+
+  return (
+    <>
+      {mode ? (
+        <div
+          className={`collapse-content ${collapseOpen ? 'open' : 'closed'}`}
+          style={{
+            maxHeight: collapseOpen ? '500px' : '0px',
+            overflow: 'hidden',
+            transition: 'max-height 0.4s ease',
+          }}
+        >
+          {collapseOpen && (
+            <>
+              {inputFields}
+              <div className="app-flex app-row app-gap-1 app-p1">
+                <button
+                  className="app-button app-col app-fl-1 app-bg-secondary"
+                  onClick={() => setCollapseOpen(prev => !prev)}
+                >
+                  Hide Search
+                </button>
+                <button
+                  className="app-button app-col app-fl-1 app-bg-primary app-font-black"
+                  onClick={() => handleSearch()}
+                >
+                  {searchResults.loading ? <div className="spinner" /> : "Search"}
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      ) : (
+        <>
+          {inputFields}
+        </>
+      )}
+      <AnimatedContainer isEntering={mode && !collapseOpen}>
+        <div className="app-flex app-row app-gap-1 app-p1">
+          <button
+            className="app-button app-col app-fl-1 app-bg-primary"
+            onClick={() => setCollapseOpen(prev => !prev)}
+          >
+            Expand Search
+          </button>
+        </div>
+      </AnimatedContainer>
+    </>
   );
 };
 

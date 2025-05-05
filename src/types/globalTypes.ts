@@ -12,6 +12,10 @@ export interface AnimatedContainerProps {
   exit?: string;
 }
 
+export interface SearchBarProps {
+  mode: boolean;
+}
+
 export interface ActivePageState {
   Name: string;
   In: boolean;

@@ -1,8 +1,19 @@
 .auth-page {
     width: 100%;
-    height: calc(100vh - 2rem - 34px)  
+    height: calc(100vh - 2rem - 34px);   
+    z-index: 2;  
 }
 .inner-auth {
     width: 25%;
     border-radius: 17px;
+}
+@media (max-width: 1024px) {
+    .inner-auth {
+        width: 85%;
+    }
+}
+@media (max-width: 600px) {
+    .inner-auth {
+        width: 65%;
+    }
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import '../styles/pages/auth-page.css';
-import logo from '../assets/images/spotify-logo.png';
+import logo from '../../public/assets/images/spotify-logo.png';
+import { useAppSelector } from "../store/hooks";
 
 const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
 const REDIRECT_URI = window.location.origin;
@@ -12,7 +13,8 @@ const SCOPES = [
 ];
 
 const AuthPage: React.FC = () => {
-
+  const viewport = useAppSelector(state => state.viewport);
+  
   const handleLogin = () => {
     const scopes = SCOPES.join('%20');
     window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${scopes}`;
@@ -21,7 +23,7 @@ const AuthPage: React.FC = () => {
   return (
     <div className='app-flex app-col app-jc-center app-ai-center auth-page'>
       <div className="app-flex app-col app-jc-between app-ai-center inner-auth app-bg-white app-p2">
-        <img src={logo} width="50%" className="app-v-m1" />
+        <img src={logo} width={viewport.type === 'mobile' ? "90%" : "50%"} className="app-v-m1" />
         <button onClick={handleLogin} className="app-button app-bg-black app-font-white">
           Login with Spotify
         </button>

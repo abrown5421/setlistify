@@ -7,6 +7,7 @@ import { useAppSelector, useAppDispatch } from "./store/hooks";
 import { setUser, setToken } from "./store/slices/authenticationSlice";
 import Cookies from "js-cookie";
 import axios from "axios";
+import ViewportTracker from './providers/ViewportProvider';  
 import ResultsPage from "./pages/ResultsPage";
 
 function App() {
@@ -71,23 +72,25 @@ function App() {
   }, [dispatch]);
   
   return (
-    <div className="app-flex app-col app-bg-black app-relative">
-      <Navbar />
-      <AnimatedContainer entry="animate__fadeInUpBig" exit="animate__fadeOutDownBig" isEntering={activePage.In && activePage.Name === 'Auth'}>
-        <AuthPage />
-      </AnimatedContainer>
-      <AnimatedContainer isEntering={activePage.In && activePage.Name === 'Search'}>
-        <SearchPage />
-      </AnimatedContainer>
-      <AnimatedContainer isEntering={activePage.In && activePage.Name === 'Results'}>
-        <ResultsPage />
-      </AnimatedContainer>
-      <AnimatedContainer entry="animate__fadeInRight" exit="animate__fadeOutRight" isEntering={notification.open}>
-        <div className={notification.severity === 'error' ? "notification notif-error app-absolute" : "notification notif-success app-absolute"}>
-          {notification.message}
-        </div>
-      </AnimatedContainer>
-    </div>
+    <ViewportTracker>
+      <div className="app-flex app-col app-bg-black app-relative">
+        <Navbar />
+        <AnimatedContainer entry="animate__fadeInUpBig" exit="animate__fadeOutDownBig" isEntering={activePage.In && activePage.Name === 'Auth'}>
+          <AuthPage />
+        </AnimatedContainer>
+        <AnimatedContainer isEntering={activePage.In && activePage.Name === 'Search'}>
+          <SearchPage />
+        </AnimatedContainer>
+        <AnimatedContainer isEntering={activePage.In && activePage.Name === 'Results'}>
+          <ResultsPage />
+        </AnimatedContainer>
+        <AnimatedContainer entry="animate__fadeInRight" exit="animate__fadeOutRight" isEntering={notification.open}>
+          <div className={notification.severity === 'error' ? "notification notif-error app-absolute" : "notification notif-success app-absolute"}>
+            {notification.message}
+          </div>
+        </AnimatedContainer>
+      </div>
+    </ViewportTracker>
   );
 }
 
