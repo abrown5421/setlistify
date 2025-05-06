@@ -112,7 +112,7 @@ const ResultsPage: React.FC = () => {
                   <Drawer>
                     <div className="app-flex app-col">
                       <div className="setlist-text-l app-font">{selectedSetlist.setlist?.artist.name}:&nbsp;</div>
-                      <div className="setlist-text-2 app-font">{selectedSetlist.setlist?.tour.name}</div>
+                      <div className="setlist-text-2 app-font">{selectedSetlist.setlist?.tour?.name}</div>
                     </div>
                     <div className="app-flex app-row">
                       <div className="setlist-text-2 app-font">Live From: {selectedSetlist.setlist?.venue.name}</div>

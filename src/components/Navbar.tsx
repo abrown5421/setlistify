@@ -59,7 +59,7 @@ const Navbar: React.FC = () => {
   return (
     <div className='app-flex app-row app-jc-between app-bg-black navbar app-p1'>
       <div className='app-flex app-col app-jc-start app-font-primary app-jc-center logo'>
-        Setlistify
+        Setlist-ify
       </div>
 
       {isAuthenticated ? (
