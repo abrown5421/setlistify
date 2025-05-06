@@ -2,11 +2,11 @@ import React from "react";
 import '../styles/pages/auth-page.css';
 import logo from '../../public/assets/images/spotify-logo.png';
 import { useAppSelector } from "../store/hooks";
+import pkceChallenge from "pkce-challenge";
 
 const CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
 const REDIRECT_URI = window.location.origin;
-const AUTH_ENDPOINT = import.meta.env.VITE_SPOTIFY_AUTH_ENDPOINT;
-const RESPONSE_TYPE = import.meta.env.VITE_SPOTIFY_RESPONSE_TYPE;
+const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
 const SCOPES = [
   'user-read-private',
   'user-read-email'
@@ -14,10 +14,16 @@ const SCOPES = [
 
 const AuthPage: React.FC = () => {
   const viewport = useAppSelector(state => state.viewport);
+
+  const handleLogin = async () => {
+    const { code_challenge, code_verifier } = await pkceChallenge();
   
-  const handleLogin = () => {
+    localStorage.setItem('pkce_code_verifier', code_verifier);
+  
     const scopes = SCOPES.join('%20');
-    window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${scopes}`;
+    const authUrl = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&code_challenge_method=S256&code_challenge=${code_challenge}&scope=${scopes}`;
+  
+    window.location.href = authUrl;
   };
 
   return (

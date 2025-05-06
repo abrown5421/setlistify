@@ -30,8 +30,7 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    const hash = window.location.hash;
-    const accessToken = new URLSearchParams(hash.replace('#', '')).get('access_token');
+    const code = new URLSearchParams(window.location.search).get('code');
 
     const fetchUserProfile = async (token: string) => {
       try {
@@ -47,24 +46,87 @@ function App() {
       }
     };
 
-    if (accessToken) {
-      const expiresAt = Date.now() + 3600 * 1000;
-      Cookies.set('spotify_access_token', accessToken, { expires: 1/24 }); 
-      Cookies.set('spotify_token_expires_at', expiresAt.toString(), { expires: 1/24 });
-      dispatch(setToken(accessToken));
-      fetchUserProfile(accessToken);
-      window.location.hash = '';
+    const exchangeCodeForToken = async (authCode: string) => {
+      const verifier = localStorage.getItem('pkce_code_verifier');
+      if (!verifier) return console.error("Missing PKCE verifier.");
+
+      try {
+        const body = new URLSearchParams({
+          client_id: import.meta.env.VITE_SPOTIFY_CLIENT_ID,
+          grant_type: 'authorization_code',
+          code: authCode,
+          redirect_uri: window.location.origin,
+          code_verifier: verifier,
+        });
+
+        const response = await axios.post('https://accounts.spotify.com/api/token', body.toString(), {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        });
+
+        const { access_token, expires_in, refresh_token } = response.data;
+        const expiresAt = Date.now() + expires_in * 1000;
+
+        Cookies.set('spotify_access_token', access_token, { expires: 1/24 });
+        Cookies.set('spotify_token_expires_at', expiresAt.toString(), { expires: 1/24 });
+        if (refresh_token) Cookies.set('spotify_refresh_token', refresh_token, { expires: 7 });
+
+        dispatch(setToken(access_token));
+        fetchUserProfile(access_token);
+
+        window.history.replaceState({}, document.title, '/');
+      } catch (error) {
+        console.error("Token exchange failed:", error);
+      }
+    };
+
+    const refreshAccessToken = async () => {
+      const refresh_token = Cookies.get('spotify_refresh_token');
+      if (!refresh_token) return;
+
+      try {
+        const body = new URLSearchParams({
+          client_id: import.meta.env.VITE_SPOTIFY_CLIENT_ID,
+          grant_type: 'refresh_token',
+          refresh_token,
+        });
+
+        const response = await axios.post('https://accounts.spotify.com/api/token', body.toString(), {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        });
+
+        const { access_token, expires_in } = response.data;
+        const expiresAt = Date.now() + expires_in * 1000;
+
+        Cookies.set('spotify_access_token', access_token, { expires: 1/24 });
+        Cookies.set('spotify_token_expires_at', expiresAt.toString(), { expires: 1/24 });
+
+        dispatch(setToken(access_token));
+      } catch (error) {
+        console.error("Token refresh failed:", error);
+      }
+    };
+
+    if (code) {
+      exchangeCodeForToken(code);
     } else {
       const storedToken = Cookies.get('spotify_access_token');
       const tokenExpiresAt = Cookies.get('spotify_token_expires_at');
 
-      if (storedToken && tokenExpiresAt && parseInt(tokenExpiresAt) > Date.now()) {
-        dispatch(setToken(storedToken));
-        const storedUser = Cookies.get('spotify_user');
-        if (storedUser) {
-          dispatch(setUser(JSON.parse(storedUser)));
+      if (storedToken && tokenExpiresAt) {
+        if (parseInt(tokenExpiresAt) > Date.now()) {
+          dispatch(setToken(storedToken));
+          const storedUser = Cookies.get('spotify_user');
+          if (storedUser) {
+            dispatch(setUser(JSON.parse(storedUser)));
+          } else {
+            fetchUserProfile(storedToken);
+          }
         } else {
-          fetchUserProfile(storedToken);
+          refreshAccessToken(); 
         }
       } else {
         Cookies.remove('spotify_access_token');
@@ -73,7 +135,7 @@ function App() {
       }
     }
   }, [dispatch]);
-  
+
   return (
     <ViewportTracker>
       <div className="app-flex app-col app-bg-black app-relative">
