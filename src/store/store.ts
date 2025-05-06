@@ -8,6 +8,7 @@ import searchResultsReducer from './slices/searchResultsSlice';
 import selectedSetlistReducer from './slices/selectedSetlist';
 import drawerReducer from './slices/drawerSlice';
 import modalReducer from './slices/modalSlice';
+import playlistReducer from './slices/playlistSlice';
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     selectedSetlist: selectedSetlistReducer,
     drawer: drawerReducer,
     modal: modalReducer,
+    playlist: playlistReducer,
   },
 });
 

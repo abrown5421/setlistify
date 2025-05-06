@@ -6,13 +6,13 @@ import placeholderImg from '../../public/assets/images/placeholder.png';
 import '../styles/components/spotify-track-display.css';
 import { closeModal, openModal, setModalContent } from "../store/slices/modalSlice";
 import SpotifyTrackSearch from "./SpotifyTrackSearch";
+import { setTracklist } from "../store/slices/playlistSlice";
 
 const SpotifyTrackDisplay: React.FC = () => {
   const dispatch = useAppDispatch();
   const token = useAppSelector(state => state.authentication.token);
   const viewport = useAppSelector(state => state.viewport.type);
   const selectedSetlist = useAppSelector(state => state.selectedSetlist);
-
   const [tracks, setTracks] = useState<ExtractedSong[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -107,9 +107,9 @@ const SpotifyTrackDisplay: React.FC = () => {
     enrichSongsWithSpotifyData();
   }, [selectedSetlist.setlist, token]);
 
-  // useEffect(()=>{
-    
-  // }, [tracks])
+  useEffect(()=>{
+    dispatch(setTracklist(tracks))
+  }, [tracks])
 
   return (
     <div className={loading ? "app-h-percent-100": ""}>

@@ -134,6 +134,13 @@ export interface ExtractedSong {
   spotifyAlbumArt?: string;
 }
 
+export interface PlaylistState {
+  name: string;
+  description: string;
+  tracklist: ExtractedSong[];
+  albumArt: string;
+}
+
 export interface SpotifyTrackSearchProps {
   token: string;
   trackName: string;
