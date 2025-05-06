@@ -100,9 +100,10 @@ function App() {
 
         const { access_token, expires_in } = response.data;
         const expiresAt = Date.now() + expires_in * 1000;
+        const cookieExpiryDays = expires_in / 86400; 
 
-        Cookies.set('spotify_access_token', access_token, { expires: 1/24 });
-        Cookies.set('spotify_token_expires_at', expiresAt.toString(), { expires: 1/24 });
+        Cookies.set('spotify_access_token', access_token, { expires: cookieExpiryDays });
+        Cookies.set('spotify_token_expires_at', expiresAt.toString(), { expires: cookieExpiryDays });
 
         dispatch(setToken(access_token));
       } catch (error) {
