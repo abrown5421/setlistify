@@ -4,7 +4,8 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { Setlist, ExtractedSong } from "../types/globalTypes";
 import placeholderImg from '../../public/assets/images/placeholder.png';
 import '../styles/components/spotify-track-display.css';
-import { openModal, setModalContent } from "../store/slices/modalSlice";
+import { closeModal, openModal, setModalContent } from "../store/slices/modalSlice";
+import SpotifyTrackSearch from "./SpotifyTrackSearch";
 
 const SpotifyTrackDisplay: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -162,10 +163,24 @@ const SpotifyTrackDisplay: React.FC = () => {
                             <button
                               className="app-button app-font-white app-absolute resolve-button"
                               onClick={() => {
+                                if (!token) return; 
                                 dispatch(setModalContent(
-                                  <div>We will include UI for searching spotify here.</div>
-                                ))
-                                dispatch(openModal())
+                                  <SpotifyTrackSearch
+                                    token={token}
+                                    trackName={song.slfmTrackName}
+                                    artistName={song.slfmArtistName}
+                                    trackIndex={idx}
+                                    onAdd={(index, enrichedData) => {
+                                      setTracks(prevTracks => {
+                                        const updated = [...prevTracks];
+                                        updated[index] = { ...updated[index], ...enrichedData };
+                                        return updated;
+                                      });
+                                      dispatch(closeModal());
+                                    }}
+                                  />
+                                ));
+                                dispatch(openModal());
                               }}
                             >
                               Resolve

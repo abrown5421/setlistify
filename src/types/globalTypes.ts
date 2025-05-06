@@ -133,3 +133,11 @@ export interface ExtractedSong {
   spotifyAlbum?: string;
   spotifyAlbumArt?: string;
 }
+
+export interface SpotifyTrackSearchProps {
+  token: string;
+  trackName: string;
+  artistName: string;
+  onAdd: (index: number, enrichedData: Partial<ExtractedSong>) => void;
+  trackIndex: number;
+}

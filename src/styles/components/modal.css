@@ -18,12 +18,13 @@
     background-color: white;
     padding: 2rem;
     border-radius: 8px;
-    max-width: 500px;
+    max-width: 750px;
+    max-height: 75vh;
+    overflow: scroll;
     width: 90%;
     position: relative;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
-
 .modal-close {
     position: absolute;
     top: 0.5rem;
