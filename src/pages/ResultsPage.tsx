@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import '../styles/pages/results-page.css';
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { Setlist } from '../types/globalTypes';
@@ -7,13 +7,17 @@ import { setSelectedSetlist } from "../store/slices/selectedSetlist";
 import SpotifyTrackDisplay from "../components/SpotifyTrackDisplay";
 import Drawer from "../components/Drawer";
 import { openDrawer } from "../store/slices/drawerSlice";
+import SetlistTrackDisplay from "../components/SetlistTrackDisplay";
 
 const ResultsPage: React.FC = () => {
   const dispatch = useAppDispatch();
+  const isAuthenticated = useAppSelector((state) => state.authentication.isAuthenticated);
   const { data, error } = useAppSelector(state => state.searchResults);
   const viewport = useAppSelector(state => state.viewport);
   const selectedSetlist = useAppSelector(state => state.selectedSetlist);
 
+  useEffect(()=>{console.log(selectedSetlist)}, [selectedSetlist])
+  
   const handleSetlistClick = (setlist: Setlist) => {
     dispatch(setSelectedSetlist(setlist));
     dispatch(openDrawer())
@@ -72,7 +76,7 @@ const ResultsPage: React.FC = () => {
                   <div className="app-flex app-row heading-divider">
                     <div className="setlist-text-3 app-font">{selectedSetlist.setlist?.venue.city.name}, {selectedSetlist.setlist?.venue.city.country.name}</div>
                   </div>
-                  <SpotifyTrackDisplay />
+                  {isAuthenticated ? <SpotifyTrackDisplay /> : <SetlistTrackDisplay />}
                 </div>
               ) : (
                 <div className="app-flex app-col app-fl-1 app-bg-grey app-overflow-scroll app-ai-center app-jc-center app-p1 track-container">
@@ -93,7 +97,7 @@ const ResultsPage: React.FC = () => {
                     <div className="app-flex app-row heading-divider">
                       <div className="setlist-text-3 app-font">{selectedSetlist.setlist?.venue.city.name}, {selectedSetlist.setlist?.venue.city.country.name}</div>
                     </div>
-                    <SpotifyTrackDisplay />
+                    {isAuthenticated ? <SpotifyTrackDisplay /> : <SetlistTrackDisplay />}
                   </Drawer>
                 </div>
               ) : (
