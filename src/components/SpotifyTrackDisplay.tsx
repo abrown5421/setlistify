@@ -105,9 +105,11 @@ const SpotifyTrackDisplay: React.FC = () => {
   }, [selectedSetlist.setlist, token]);
 
   return (
-    <div>
+    <div className={loading ? "app-h-percent-100": ""}>
       {loading ? (
-        <div className="app-spinner" /> 
+        <div className="app-flex app-jc-center app-ai-center app-h-percent-100">
+          <div className="app-spinner" /> 
+        </div>
       ) : (
         tracks.length > 0 ? (
           <div className="app-relative">
@@ -151,10 +153,15 @@ const SpotifyTrackDisplay: React.FC = () => {
                         <div className="app-flex app-col app-fl-2">
                             <img src={song.spotifyAlbumArt ? song.spotifyAlbumArt : placeholderImg} alt="album art" className="album-art" />
                         </div>
-                        <div className="app-flex app-col app-fl-10">
+                        <div className="app-flex app-col app-fl-10 app-relative">
                             <div className="track-title app-font app-error">Track Couldn't Be Found on Spotify</div>
                             <div className="track-artist app-font"><strong>{song.slfmTrackName}</strong></div>
                             <div className="track-artist app-font"><strong>By: </strong>{song.slfmArtistName}</div>
+                            <button
+                              className="app-button app-font-white app-absolute resolve-button"
+                            >
+                              Resolve
+                            </button>
                         </div>
                     </div>
                 )

@@ -22,6 +22,10 @@
     top: -100px;
     right: 0;
 }
+.resolve-button {
+    bottom: 0;
+    background-color: crimson;
+}
 @media (max-width: 1024px) {
     .album-art {
         width: 100px;
