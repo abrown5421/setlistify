@@ -9,7 +9,9 @@ const REDIRECT_URI = window.location.origin;
 const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
 const SCOPES = [
   'user-read-private',
-  'user-read-email'
+  'user-read-email',
+  'playlist-modify-public', 
+  'playlist-modify-private'
 ];
 
 const AuthPage: React.FC = () => {

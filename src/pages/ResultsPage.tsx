@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import '../styles/pages/results-page.css';
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { Setlist } from '../types/globalTypes';
@@ -9,6 +9,7 @@ import Drawer from "../components/Drawer";
 import { openDrawer } from "../store/slices/drawerSlice";
 import SetlistTrackDisplay from "../components/SetlistTrackDisplay";
 import { openModal, setModalContent } from "../store/slices/modalSlice";
+import SpotifyPlaylistSaveForm from "../components/SpotifyPlaylistSaveForm";
 
 const ResultsPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -16,17 +17,11 @@ const ResultsPage: React.FC = () => {
   const { data, error } = useAppSelector(state => state.searchResults);
   const viewport = useAppSelector(state => state.viewport);
   const selectedSetlist = useAppSelector(state => state.selectedSetlist);
-
-  useEffect(()=>{console.log(selectedSetlist)}, [selectedSetlist])
   
   const handleSetlistClick = (setlist: Setlist) => {
     dispatch(setSelectedSetlist(setlist));
     dispatch(openDrawer())
   };
-
-  const handleSaveSetlist = () => {
-    console.log('saving playlist')
-  }
   
   if (error) {
     return <div className="app-flex app-col app-ai-center app-bg-white results-page">
@@ -84,11 +79,9 @@ const ResultsPage: React.FC = () => {
                   <div className="app-button app-v-m1 app-bg-primary app-font-white"
                     onClick={()=>{
                       if (isAuthenticated) {
-                        handleSaveSetlist()
                         dispatch(setModalContent(
                           <div className="app-w-percent-100 app-jc-center app-ai-center app-flex app-col app-gap-1">
-                            <div className="app-spinner" />
-                            We are Saving you spotify playlist. Sit Tight...
+                            <SpotifyPlaylistSaveForm />
                           </div>
                         ));
                         dispatch(openModal());
@@ -130,11 +123,9 @@ const ResultsPage: React.FC = () => {
                     <div className="app-button app-v-m1 app-bg-primary app-font-white"
                       onClick={()=>{
                         if (isAuthenticated) {
-                          handleSaveSetlist()
                           dispatch(setModalContent(
                             <div className="app-w-percent-100 app-jc-center app-ai-center app-flex app-col app-gap-1">
-                              <div className="app-spinner" />
-                              We are Saving you spotify playlist. Sit Tight...
+                              <SpotifyPlaylistSaveForm />
                             </div>
                           ));
                           dispatch(openModal());

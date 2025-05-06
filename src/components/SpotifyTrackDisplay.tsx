@@ -43,7 +43,6 @@ const SpotifyTrackDisplay: React.FC = () => {
     const track = data.tracks.items[0];
   
     if (!track) return {};
-    console.log(track)
     return {
       spotifyTrackId: track.id,
       spotifyArtist: track.artists[0]?.name,

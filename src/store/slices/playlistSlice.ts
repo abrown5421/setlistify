@@ -12,7 +12,7 @@ const playlistSlice = createSlice({
   name: 'playlist',
   initialState,
   reducers: {
-    setName: (state, action: PayloadAction<string>) => {
+    setPlistName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
     },
     setDescription: (state, action: PayloadAction<string>) => {
@@ -21,12 +21,9 @@ const playlistSlice = createSlice({
     setTracklist: (state, action: PayloadAction<ExtractedSong[]>) => {
       state.tracklist = action.payload;
     },
-    setAlbumArt: (state, action: PayloadAction<string>) => {
-      state.albumArt = action.payload;
-    },
     resetPlaylist: () => initialState,
   },
 });
 
-export const { setName, setDescription, setTracklist, setAlbumArt, resetPlaylist } = playlistSlice.actions;
+export const { setPlistName, setDescription, setTracklist, resetPlaylist } = playlistSlice.actions;
 export default playlistSlice.reducer;
