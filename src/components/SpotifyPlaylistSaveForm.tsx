@@ -126,7 +126,7 @@ const SpotifyPlaylistSaveForm: React.FC = () => {
   };
 
   return (
-    <div className='playlist-form'>
+    <div className='playlist-form app-w-percent-100'>
         <div className='headliner app-font-primary form-head'>Save Spotify Playlist</div>
         <div className="app-flex app-row app-gap-1 app-v-m1">
             <div className='app-flex app-col app-fl-5'>
