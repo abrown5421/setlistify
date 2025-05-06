@@ -29,3 +29,8 @@
     font-size: 2rem;
     cursor: pointer;
 }
+@media (min-width: 600px) {
+    .drawer {
+        width: 75%;
+    }
+}

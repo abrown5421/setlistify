@@ -152,7 +152,7 @@ const SpotifyTrackDisplay: React.FC = () => {
                     </div>
                 ) : (
                     <div key={idx} className="app-row app-flex app-gap-1 song-card spacer">
-                        <div className="app-flex app-col app-fl-2">
+                        <div className="app-flex app-col app-fl-2 app-relative">
                             <img src={song.spotifyAlbumArt ? song.spotifyAlbumArt : placeholderImg} alt="album art" className="album-art" />
                         </div>
                         <div className="app-flex app-col app-fl-10 app-relative">
