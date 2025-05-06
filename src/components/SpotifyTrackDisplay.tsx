@@ -107,6 +107,10 @@ const SpotifyTrackDisplay: React.FC = () => {
     enrichSongsWithSpotifyData();
   }, [selectedSetlist.setlist, token]);
 
+  // useEffect(()=>{
+    
+  // }, [tracks])
+
   return (
     <div className={loading ? "app-h-percent-100": ""}>
       {loading ? (
