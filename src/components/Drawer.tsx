@@ -1,4 +1,3 @@
-// src/components/Drawer.tsx
 import React, { ReactNode } from 'react';
 import { closeDrawer } from '../store/slices/drawerSlice';
 import '../styles/components/drawer.css';

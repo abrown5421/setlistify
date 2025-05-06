@@ -1,8 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-interface DrawerState {
-  isOpen: boolean;
-}
+import { DrawerState } from '../../types/globalTypes';
 
 const initialState: DrawerState = {
   isOpen: false,

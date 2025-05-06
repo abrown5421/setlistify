@@ -9,11 +9,13 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import ViewportTracker from './providers/ViewportProvider';  
 import ResultsPage from "./pages/ResultsPage";
+import Modal from "./components/Modal";
 
 function App() {
   const dispatch = useAppDispatch();
   const activePage = useAppSelector((state) => state.activePage);
   const notification = useAppSelector((state) => state.notification);
+  const modal = useAppSelector((state) => state.modal);
 
   useEffect(() => {
     const storedUser = Cookies.get('spotify_user');
@@ -155,6 +157,9 @@ function App() {
             {notification.message}
           </div>
         </AnimatedContainer>
+        <Modal>
+          {modal.modalContent}
+        </Modal>
       </div>
     </ViewportTracker>
   );

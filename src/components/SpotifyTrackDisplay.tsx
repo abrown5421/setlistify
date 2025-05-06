@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import '../styles/components/search-bar.css';
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { Setlist, ExtractedSong } from "../types/globalTypes";
 import placeholderImg from '../../public/assets/images/placeholder.png';
 import '../styles/components/spotify-track-display.css';
+import { openModal, setModalContent } from "../store/slices/modalSlice";
 
 const SpotifyTrackDisplay: React.FC = () => {
+  const dispatch = useAppDispatch();
   const token = useAppSelector(state => state.authentication.token);
   const viewport = useAppSelector(state => state.viewport.type);
   const selectedSetlist = useAppSelector(state => state.selectedSetlist);
@@ -159,6 +161,12 @@ const SpotifyTrackDisplay: React.FC = () => {
                             <div className="track-artist app-font"><strong>By: </strong>{song.slfmArtistName}</div>
                             <button
                               className="app-button app-font-white app-absolute resolve-button"
+                              onClick={() => {
+                                dispatch(setModalContent(
+                                  <div>We will include UI for searching spotify here.</div>
+                                ))
+                                dispatch(openModal())
+                              }}
                             >
                               Resolve
                             </button>

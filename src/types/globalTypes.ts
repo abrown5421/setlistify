@@ -1,7 +1,18 @@
+import { ReactNode } from "react";
+
 export interface ViewportState {
   width: number;
   height: number;
   type: "mobile" | "tablet" | "desktop";
+}
+
+export interface DrawerState {
+  isOpen: boolean;
+}
+
+export interface ModalState {
+  isOpen: boolean;
+  modalContent: ReactNode;
 }
 
 export interface AnimatedContainerProps {
